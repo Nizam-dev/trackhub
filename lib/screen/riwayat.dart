@@ -1,4 +1,7 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
+import 'package:trackhub/network/api.dart';
 import 'package:trackhub/widget/cardbox.dart';
 
 class Riwayat extends StatefulWidget {
@@ -7,6 +10,12 @@ class Riwayat extends StatefulWidget {
 }
 
 class _RiwayatState extends State<Riwayat> {
+  var data;
+   @override
+  void initState() {
+    super.initState();
+    this.getRiwayat();
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -26,11 +35,33 @@ class _RiwayatState extends State<Riwayat> {
         child: SingleChildScrollView(
           child: Column(
             children: <Widget>[
-              Cardbox()
+                if(data != null)...[
+                  for (var penumpang in data) ...[
+                  Cardbox(
+                    alamat: penumpang["alamat"],
+                    asal_sekolah: penumpang["asal_sekolah"],
+                    nama: penumpang["nama"],
+                    no_telp: penumpang["no_telp"],
+                    tgl_lahir: penumpang["tgl_lahir"],
+                    tgl_input_penumpang : penumpang["tgl_input_penumpang"],
+                    nama_angkutan: penumpang["nama_angkutan"],
+                    nama_supir: penumpang["nama_supir"],
+                  ),
+                ]
+                ]
             ]
           )
         )
       ),
     );
   }
+
+  void getRiwayat() async{
+    var res = await Network().getData("/list-riwayat-penumpang");
+    var body = json.decode(res.body);
+    setState(() {
+      data = body["data"];
+    });
+  }
+
 }

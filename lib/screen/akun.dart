@@ -4,6 +4,7 @@ import 'package:trackhub/network/api.dart';
 import 'dart:convert';
 import 'package:trackhub/screen/masuk.dart';
 import 'package:trackhub/screen/splashscreen.dart';
+import 'package:trackhub/widget/maincolor.dart';
 
 class Akun extends StatefulWidget {
   @override
@@ -13,6 +14,7 @@ class Akun extends StatefulWidget {
 class _AkunState extends State<Akun> {
 
   String nama='';
+  String alamat='';
 
   @override
   void initState(){
@@ -27,6 +29,7 @@ class _AkunState extends State<Akun> {
     if(user != null) {
       setState(() {
         nama = user['nama'];
+        alamat = user['alamat'];
       });
     }
   }
@@ -38,7 +41,7 @@ class _AkunState extends State<Akun> {
       appBar: AppBar(
             title: Center(
               child: Text(
-                "Akun",
+                "Profil",
                 style: TextStyle(color: Colors.black),
             ),
             ),
@@ -46,24 +49,84 @@ class _AkunState extends State<Akun> {
             automaticallyImplyLeading: false,
         ),
       body: Container(
-        width: MediaQuery.of(context).size.width,
         child:  Column(
           children: <Widget>[
-            Text("Hello ${nama}"),
-            SizedBox(height: 40),
-            SizedBox(
-                width: double.infinity,
-                child: RaisedButton(
-                      child: Text("Keluar"),
-                      onPressed: (){
-                        logout();
-                      },
-                      color: Colors.redAccent,
-                      textColor: Colors.white,
-                      padding: EdgeInsets.fromLTRB(9, 9, 9, 9),
-                      splashColor: Colors.grey,
-                    ),
-              ),
+          Padding(padding: EdgeInsets.symmetric(vertical: 25),
+          child: Align(
+            alignment: Alignment.center,
+            child: Image.asset("assets/images/logo.png", width: 120),
+            )
+          ),
+
+          Text("${nama}",
+            style: TextStyle(
+              fontSize: 35
+            ),
+          ),
+
+          SizedBox(height: 10),
+          Text("${alamat}",
+            style: TextStyle(
+              fontSize: 16,
+              color: Colors.grey
+            ),
+          ),
+
+          Padding(padding: EdgeInsets.symmetric(vertical: 10,horizontal: 25),
+          child:  SizedBox(
+                    width: double.infinity,
+                    height: 40,
+                    child: RaisedButton(
+                          child: Text("Ubah Data Akun"),
+                          onPressed: (){
+                            
+                          },
+                          color: Maincolor.PrimaryColor,
+                          textColor: Colors.white,
+                          padding: EdgeInsets.fromLTRB(9, 9, 9, 9),
+                          splashColor: Colors.grey,
+                        ),
+                  ),
+
+          ),
+          Padding(padding: EdgeInsets.symmetric(vertical: 10,horizontal: 25),
+          child:  SizedBox(
+                    width: double.infinity,
+                    height: 40,
+                    child: RaisedButton(
+                          child: Text("Ubah Password"),
+                          onPressed: (){
+                            
+                          },
+                          color: Maincolor.PrimaryColor,
+                          textColor: Colors.white,
+                          padding: EdgeInsets.fromLTRB(9, 9, 9, 9),
+                          splashColor: Colors.grey,
+                        ),
+                  ),
+
+          ),
+
+          Padding(padding: EdgeInsets.symmetric(vertical: 10,horizontal: 25),
+          child:  SizedBox(
+                    width: double.infinity,
+                    height: 40,
+                    child: RaisedButton(
+                          child: Text("Keluar"),
+                          onPressed: (){
+                            logout();
+                          },
+                          color: Colors.red,
+                          textColor: Colors.white,
+                          padding: EdgeInsets.fromLTRB(9, 9, 9, 9),
+                          splashColor: Colors.grey,
+                        ),
+                  ),
+
+          )
+
+          
+
 
           ],
         ),

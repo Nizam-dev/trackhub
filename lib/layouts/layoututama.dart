@@ -16,7 +16,6 @@ class LayoutUtama extends StatefulWidget {
 class _LayoutUtamaState extends State<LayoutUtama> {
   int _selectedNavbar = 0;
   var listpage;
-
   String role ='';
 
   @override
@@ -30,7 +29,7 @@ class _LayoutUtamaState extends State<LayoutUtama> {
     var user = jsonDecode(localStorage.getString('user'));
 
     if(user != null) {
-      if(user['profesi'] == "petugas_terminal"){
+      if(user['profesi'] == "supir"){
         setState(() {
           role = user['profesi'];
           listpage = <Widget>[
@@ -60,13 +59,17 @@ class _LayoutUtamaState extends State<LayoutUtama> {
     });
   }
 
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: listpage[_selectedNavbar],
+      body: IndexedStack(
+            children: listpage,
+            index: _selectedNavbar,
+          ),
       bottomNavigationBar: BottomNavigationBar(
         items: <BottomNavigationBarItem>[
-          if(role == "petugas_terminal")...[
+          if(role == "supir")...[
               BottomNavigationBarItem(
               icon: Icon(Icons.location_on),
               title: Text('Tracking'),
@@ -91,6 +94,7 @@ class _LayoutUtamaState extends State<LayoutUtama> {
         unselectedItemColor: Colors.grey,
         showUnselectedLabels: true,
         onTap: _changeSelectedNavBar,
+        type: BottomNavigationBarType.fixed,
       ),
     );
   }

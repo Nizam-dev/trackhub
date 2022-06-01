@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:trackhub/layouts/layoututama.dart';
 import 'package:trackhub/screen/masuk.dart';
+import 'package:trackhub/screen/tracking.dart';
 
 class Splashscreen extends StatefulWidget {
   @override
