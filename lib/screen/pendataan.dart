@@ -1,6 +1,7 @@
 import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:trackhub/layouts/layoututama.dart';
+import 'package:trackhub/screen/absenQrcode.dart';
 import 'package:trackhub/screen/pendataanFilter.dart';
 import 'package:trackhub/screen/riwayat.dart';
 import 'package:trackhub/widget/maincolor.dart';
@@ -39,6 +40,8 @@ Future<String> getData() async {
       for (var item in data) {
         pilihantrayek.add(item["nama_angkutan"]);
         sopir.add(item["nama"]);
+        id.add(item["id_angkutan"].toString());
+        
       }
     }
   });
@@ -226,7 +229,7 @@ pilihMenuPendataan(){
                     child: RaisedButton(
                           child: Text("Absen Penumpang"),
                           onPressed: () {
-                              Navigator.push(context, MaterialPageRoute(builder: (context) => PendataanFilter("2")));
+                              Navigator.push(context, MaterialPageRoute(builder: (context) => PendataanFilter(id[_pilihan])));
                           },
                           color: Maincolor.PrimaryColor,
                           textColor: Colors.white,
@@ -240,7 +243,9 @@ pilihMenuPendataan(){
                     width: double.infinity,
                     child: RaisedButton(
                           child: Text("Scan QR Code"),
-                          onPressed:  (){ },
+                          onPressed: () {
+                              Navigator.push(context, MaterialPageRoute(builder: (context) => AbsenQrcode(id[_pilihan])));
+                          },
                           color: Maincolor.PrimaryColor,
                           textColor: Colors.white,
                           padding: EdgeInsets.fromLTRB(9, 9, 9, 9),

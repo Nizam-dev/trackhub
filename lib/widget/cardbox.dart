@@ -10,7 +10,8 @@ class Cardbox extends StatelessWidget {
   String asal_sekolah;
   String nama_supir;
   String nama_angkutan;
-  Cardbox({this.nama,this.alamat,this.no_telp,this.tgl_lahir,this.asal_sekolah,this.tgl_input_penumpang,this.nama_angkutan,this.nama_supir});
+  String type_absen;
+  Cardbox({this.type_absen,this.nama,this.alamat,this.no_telp,this.tgl_lahir,this.asal_sekolah,this.tgl_input_penumpang,this.nama_angkutan,this.nama_supir});
 
 
   @override
@@ -46,7 +47,7 @@ class Cardbox extends StatelessWidget {
                       child: Container(
                         padding: EdgeInsets.only(right: 8),
                         alignment: Alignment.centerRight,
-                        child: Text('Scan Qr',style: TextStyle(color: Colors.white,
+                        child: Text('$type_absen',style: TextStyle(color: Colors.white,
                         fontSize: 15
                         )),
                           ),

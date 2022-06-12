@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'dart:async';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:trackhub/layouts/layoututama.dart';
-import 'package:trackhub/screen/masuk.dart';
+import 'package:trackhub/screen/home.dart';
 import 'package:trackhub/screen/tracking.dart';
 
 class Splashscreen extends StatefulWidget {
@@ -46,7 +46,7 @@ class _SplashscreenState extends State<Splashscreen> {
         MaterialPageRoute(builder: (context) => LayoutUtama()));
     } else{
       Navigator.of(context).pushReplacement(
-        MaterialPageRoute(builder: (context) => Masuk()));
+        MaterialPageRoute(builder: (context) => Home()));
     }
 
     

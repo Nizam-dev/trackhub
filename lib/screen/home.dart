@@ -2,12 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:trackhub/widget/maincolor.dart';
 import 'package:trackhub/screen/login.dart';
 
-class Masuk extends StatefulWidget {
+class Home extends StatefulWidget {
   @override
-  _MasukState createState() => _MasukState();
+  _HomeState createState() => _HomeState();
 }
 
-class _MasukState extends State<Masuk> {
+class _HomeState extends State<Home> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(

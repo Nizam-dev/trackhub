@@ -2,8 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:trackhub/network/api.dart';
 import 'dart:convert';
-import 'package:trackhub/screen/masuk.dart';
+import 'package:trackhub/screen/home.dart';
 import 'package:trackhub/screen/splashscreen.dart';
+import 'package:trackhub/screen/ubahPassword.dart';
 import 'package:trackhub/widget/maincolor.dart';
 
 class Akun extends StatefulWidget {
@@ -96,7 +97,12 @@ class _AkunState extends State<Akun> {
                     child: RaisedButton(
                           child: Text("Ubah Password"),
                           onPressed: (){
-                            
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => UbahPassword()
+                                ),
+                            );
                           },
                           color: Maincolor.PrimaryColor,
                           textColor: Colors.white,
@@ -143,7 +149,7 @@ void logout() async{
       localStorage.remove('token');
       Navigator.pushReplacement(
           context,
-          MaterialPageRoute(builder: (context)=>Masuk()));
+          MaterialPageRoute(builder: (context)=>Home()));
           
     // }
   }

@@ -15,45 +15,59 @@ class LayoutUtama extends StatefulWidget {
 
 class _LayoutUtamaState extends State<LayoutUtama> {
   int _selectedNavbar = 0;
-  var listpage;
+  var listpage = <Widget>[
+              Tracking(),
+              Pendataan(),
+              Riwayat(),
+              Akun(),
+  ];
   String role ='';
 
   @override
   void initState(){
-    super.initState();
     _loadUserData();
+    super.initState();
   }
 
   _loadUserData() async{
     SharedPreferences localStorage = await SharedPreferences.getInstance();
     var user = jsonDecode(localStorage.getString('user'));
-
     if(user != null) {
-      if(user['profesi'] == "supir"){
-        setState(() {
+    setState(() {
           role = user['profesi'];
-          listpage = <Widget>[
-              Tracking(),
-              Pendataan(),
-              Riwayat(),
-              Akun(),
-            ];
+            if(user['profesi'] != "supir"){
+              listpage.removeAt(0);
+            }   
         });
-      }else{
-        setState(() {
-          role = user['profesi'];
-          listpage = <Widget>[
-              Pendataan(),
-              Riwayat(),
-              Akun(),
-            ];
-        });
-      }
     }
+
+    // if(user != null) {
+    //   if(user['profesi'] == "supir"){
+    //     setState(() {
+    //       role = user['profesi'];
+    //       listpage = <Widget>[
+    //           Tracking(),
+    //           Pendataan(),
+    //           Riwayat(),
+    //           Akun(),
+    //         ];
+    //     });
+    //   }else{
+    //     setState(() {
+    //       role = user['profesi'];
+    //       listpage = <Widget>[
+    //           Pendataan(),
+    //           Riwayat(),
+    //           Akun(),
+    //         ];
+    //     });
+    //   }
+    // }
   }
 
 
   void _changeSelectedNavBar(int index) {
+    
     setState(() {
       _selectedNavbar = index;
     });
@@ -63,10 +77,7 @@ class _LayoutUtamaState extends State<LayoutUtama> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: IndexedStack(
-            children: listpage,
-            index: _selectedNavbar,
-          ),
+      body: listpage[_selectedNavbar],
       bottomNavigationBar: BottomNavigationBar(
         items: <BottomNavigationBarItem>[
           if(role == "supir")...[
@@ -94,7 +105,6 @@ class _LayoutUtamaState extends State<LayoutUtama> {
         unselectedItemColor: Colors.grey,
         showUnselectedLabels: true,
         onTap: _changeSelectedNavBar,
-        type: BottomNavigationBarType.fixed,
       ),
     );
   }

@@ -46,6 +46,7 @@ class _RiwayatState extends State<Riwayat> {
                     tgl_input_penumpang : penumpang["tgl_input_penumpang"],
                     nama_angkutan: penumpang["nama_angkutan"],
                     nama_supir: penumpang["nama_supir"],
+                    type_absen: penumpang["type_absen"],
                   ),
                 ]
                 ]

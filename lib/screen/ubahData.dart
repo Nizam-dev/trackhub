@@ -2,28 +2,26 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:trackhub/network/api.dart';
-import 'package:trackhub/screen/pendataanData.dart';
 import 'package:trackhub/widget/maincolor.dart';
-import 'package:intl/intl.dart';
-class PendataanFilter extends StatefulWidget {
-  String id;
-  PendataanFilter(this.id);
+
+class UbahData extends StatefulWidget {
+
   @override
-  _PendataanFilterState createState() => _PendataanFilterState();
+  _UbahDataState createState() => _UbahDataState();
 }
 
-class _PendataanFilterState extends State<PendataanFilter> {
+class _UbahDataState extends State<UbahData> {
   bool _isLoading = false;
   final _formKey = GlobalKey<FormState>();
-  var nama, tgllahir;
+  var username, nama, alamat, nomor_telepon;
   final _scaffoldKey = GlobalKey<ScaffoldState>();
   bool _secureText = true;
-  TextEditingController dateinput = TextEditingController(); 
 
-  @override
-  void initState() {
-    dateinput.text = ""; //set the initial value of text field
-    super.initState();
+
+  showHide(){
+    setState(() {
+      _secureText = !_secureText;
+    });
   }
 
   _showMsg(msg) {
@@ -45,7 +43,7 @@ class _PendataanFilterState extends State<PendataanFilter> {
               Align(
               alignment: Alignment.centerLeft,
                 child: Text(
-              "Absen Penumpang",
+              "Ubah Akun",
                 style: TextStyle(
                 fontSize: 24,
                 fontWeight: FontWeight.bold,
@@ -53,15 +51,6 @@ class _PendataanFilterState extends State<PendataanFilter> {
                 ),
               ),
 
-              Align(
-              alignment: Alignment.centerLeft,
-                child: Text(
-              "Pastikan data yang anda masukkan sudak benar!",
-                style: TextStyle(
-                fontSize: 16,
-                ),
-                ),
-              ),
 
               Container(
                 margin: EdgeInsets.only(top: 20),
@@ -78,11 +67,26 @@ class _PendataanFilterState extends State<PendataanFilter> {
                           cursorColor: Colors.blue,
                           keyboardType: TextInputType.text,
                           decoration: InputDecoration(
+                            hintText: "Username",
+                          ),
+                          validator: (usernameValue){
+                            if(usernameValue.isEmpty){
+                              return 'Please enter your username';
+                            }
+                            username = usernameValue;
+                            return null;
+                          }
+                        ),
+                        SizedBox(height: 12),
+                        TextFormField(
+                          cursorColor: Colors.blue,
+                          keyboardType: TextInputType.text,
+                          decoration: InputDecoration(
                             hintText: "Nama",
                           ),
                           validator: (namaValue){
                             if(namaValue.isEmpty){
-                              return 'Please enter your Nama';
+                              return 'Please enter your nama';
                             }
                             nama = namaValue;
                             return null;
@@ -90,35 +94,34 @@ class _PendataanFilterState extends State<PendataanFilter> {
                         ),
                         SizedBox(height: 12),
                         TextFormField(
-                controller: dateinput,
-                decoration: InputDecoration( 
-                   icon: Icon(Icons.calendar_today), 
-                   labelText: "Enter Date" 
-                ),
-                readOnly: true,  
-                validator: (tgllahirValue){
-                            if(tgllahirValue.isEmpty){
-                              return 'Please enter your tgllahir';
+                          cursorColor: Colors.blue,
+                          keyboardType: TextInputType.text,
+                          decoration: InputDecoration(
+                            hintText: "alamat",
+                          ),
+                          validator: (alamatValue){
+                            if(alamatValue.isEmpty){
+                              return 'Please enter your alamat';
                             }
-                            tgllahir = tgllahirValue;
+                            alamat = alamatValue;
                             return null;
-                          },
-                onTap: () async {
-
-                  DateTime pickedDate = await showDatePicker(
-                      context: context, initialDate: DateTime.now(),
-                      firstDate: DateTime(1990), 
-                      lastDate: DateTime(2025)
-                  );
-                  if(pickedDate != null ){
-                      String formattedDate = DateFormat('dd-MM-yyyy').format(pickedDate); 
-                      setState(() {
-                         dateinput.text = formattedDate; 
-                         tgllahir = formattedDate; 
-                      });
-                  }
-                },
-             ),
+                          }
+                        ),
+                        SizedBox(height: 12),
+                        TextFormField(
+                          cursorColor: Colors.blue,
+                          keyboardType: TextInputType.text,
+                          decoration: InputDecoration(
+                            hintText: "no_telepon",
+                          ),
+                          validator: (no_teleponValue){
+                            if(no_teleponValue.isEmpty){
+                              return 'Please enter your no_telepon';
+                            }
+                            nomor_telepon = no_teleponValue;
+                            return null;
+                          }
+                        ),
                         SizedBox(height: 42),
                         SizedBox(
                           width: double.infinity,
@@ -127,7 +130,8 @@ class _PendataanFilterState extends State<PendataanFilter> {
                           child: Padding(
                             padding: EdgeInsets.symmetric(horizontal: 18, vertical: 10),
                             child: Text(
-                              _isLoading? 'Mencari Data..' : 'Lanjut',
+                              _isLoading? 'Proccessing..' : 'Simpan',
+                              textDirection: TextDirection.ltr,
                               style: TextStyle(
                                 color: Colors.white,
                                 fontSize: 18.0,
@@ -143,7 +147,7 @@ class _PendataanFilterState extends State<PendataanFilter> {
                               new BorderRadius.circular(8.0)),
                           onPressed: () {
                             if (_formKey.currentState.validate()) {
-                              _filterdata();
+                              _login();
                             }
                           },
                         ),
@@ -153,7 +157,14 @@ class _PendataanFilterState extends State<PendataanFilter> {
                   ),
                 ),
               ),
-              
+              SizedBox(height: 24),
+              Text(
+                    "Butuh Bantuan ? ",
+                    style: TextStyle(
+                      color: Colors.blueAccent,
+                      fontSize: 16,
+                    ),
+                  ),
             ],
           ),
         ),
@@ -161,21 +172,11 @@ class _PendataanFilterState extends State<PendataanFilter> {
     );
   }
 
-  void _filterdata() async{
-      setState(() {
+  void _login() async{
+    setState(() {
       _isLoading = true;
     });
-    var data = {
-      'nama' : nama,
-      'tgl_lahir' : tgllahir
-    };
-
-    var res = await Network().auth(data, '/daftar-penumpang');
-    var body = json.decode(res.body);
-    Navigator.push(context, MaterialPageRoute(builder: (context) => PendataanData(data: body["data"],angkutan_id: widget.id)));
-
-    setState(() {
-      _isLoading = false;
-    });
+ 
+   
   }
 }
