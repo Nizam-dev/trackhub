@@ -77,7 +77,10 @@ class _LayoutUtamaState extends State<LayoutUtama> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: listpage[_selectedNavbar],
+      body: IndexedStack(
+        index: _selectedNavbar,
+        children: listpage,
+      ),
       bottomNavigationBar: BottomNavigationBar(
         items: <BottomNavigationBarItem>[
           if(role == "supir")...[

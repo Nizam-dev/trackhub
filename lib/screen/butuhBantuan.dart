@@ -1,56 +1,39 @@
-import 'dart:convert';
+import 'dart:io';
 
 import 'package:flutter/material.dart';
-import 'package:shared_preferences/shared_preferences.dart';
-import 'package:trackhub/network/api.dart';
 import 'package:trackhub/widget/maincolor.dart';
+import 'package:url_launcher/url_launcher.dart';
 
-class UbahData extends StatefulWidget {
+class ButuhBantuan extends StatefulWidget {
 
   @override
-  _UbahDataState createState() => _UbahDataState();
+  _ButuhBantuanState createState() => _ButuhBantuanState();
 }
 
-class _UbahDataState extends State<UbahData> {
-  bool _isLoading = false;
+class _ButuhBantuanState extends State<ButuhBantuan> {
   final _formKey = GlobalKey<FormState>();
-  var username, nama, alamat, nomor_telepon, id;
+  var username, nama, keluhan,password;
   final _scaffoldKey = GlobalKey<ScaffoldState>();
   bool _secureText = true;
-
-  final TextEditingController _namacontroller = TextEditingController();
-  final TextEditingController _alamatcontroller = TextEditingController();
-  final TextEditingController _usernamecontroller = TextEditingController();
-  final TextEditingController _nomor_teleponcontroller = TextEditingController();
-
-  @override
+  var pilihankeluhan = <String>[
+    "Lupa Password?",
+    "Lupa Username?",
+    "Lupa Username dan Password?",
+  ];
+  int _pilihan = 0;
+  
   void initState(){
+    keluhan = pilihankeluhan[_pilihan];
     super.initState();
-    _loadUserData();
   }
 
-  _loadUserData() async{
-    SharedPreferences localStorage = await SharedPreferences.getInstance();
-    var user = jsonDecode(localStorage.getString('user'));
-
-    if(user != null) {
-      setState(() {
-        id = user['id'];
-        _namacontroller.text = user['nama'];
-        _alamatcontroller.text = user['alamat'];
-        _usernamecontroller.text = user['username'];
-        _nomor_teleponcontroller.text = user['notelp'];
-      });
-    }
+   showHide(){
+    setState(() {
+      _secureText = !_secureText;
+    });
   }
 
 
-  _showMsg(msg) {
-    final snackBar = SnackBar(
-      content: Text(msg),
-    );
-    _scaffoldKey.currentState.showSnackBar(snackBar);
-  }
 
   @override
   Widget build(BuildContext context){
@@ -64,10 +47,20 @@ class _UbahDataState extends State<UbahData> {
               Align(
               alignment: Alignment.centerLeft,
                 child: Text(
-              "Ubah Akun",
+              "Bantuan",
                 style: TextStyle(
                 fontSize: 24,
                 fontWeight: FontWeight.bold,
+                ),
+                ),
+              ),
+
+              Align(
+              alignment: Alignment.centerLeft,
+                child: Text(
+              "Isi formulir dibawah ini lalu hubungi admin untuk mengetahui akses akun anda!",
+                style: TextStyle(
+                fontSize: 16,
                 ),
                 ),
               ),
@@ -84,13 +77,42 @@ class _UbahDataState extends State<UbahData> {
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         SizedBox(height: 18),
+                        Container(
+                          margin: EdgeInsets.symmetric(vertical: 10),
+                          child : InputDecorator(
+                          decoration: const InputDecoration(border: OutlineInputBorder(),contentPadding: const EdgeInsets.symmetric(vertical: 1.0, horizontal: 5)),
+                          child: DropdownButtonHideUnderline(
+                          child: DropdownButton<String>(
+                            value: keluhan,
+                            //elevation: 5,
+                            style: TextStyle(color: Colors.black),
+                            items: pilihankeluhan.map<DropdownMenuItem<String>>((String value) {
+                              return DropdownMenuItem<String>(
+                                value: value,
+                                child: Text(value),
+                              );
+                            }).toList(),
+                            hint: Text(
+                              "Pilih Bantuan",
+                              style: TextStyle(
+                                  color: Colors.black38,
+                                  fontSize: 16,
+                                  fontWeight: FontWeight.w600),
+                            ),
+                            onChanged: (String value) {
+                              setState(() {
+                                keluhan = value;
+                              });
+                            },
+                          ),
+                          ))
+                        ),
                         TextFormField(
                           cursorColor: Colors.blue,
                           keyboardType: TextInputType.text,
                           decoration: InputDecoration(
                             hintText: "Username",
                           ),
-                          controller: _usernamecontroller,
                           validator: (usernameValue){
                             if(usernameValue.isEmpty){
                               return 'Please enter your username';
@@ -104,9 +126,8 @@ class _UbahDataState extends State<UbahData> {
                           cursorColor: Colors.blue,
                           keyboardType: TextInputType.text,
                           decoration: InputDecoration(
-                            hintText: "Nama",
+                            hintText: "Nama Lengkap",
                           ),
-                          controller: _namacontroller,
                           validator: (namaValue){
                             if(namaValue.isEmpty){
                               return 'Please enter your nama';
@@ -115,35 +136,25 @@ class _UbahDataState extends State<UbahData> {
                             return null;
                           }
                         ),
-                        SizedBox(height: 12),
+                        SizedBox(height: 42),
                         TextFormField(
                           cursorColor: Colors.blue,
                           keyboardType: TextInputType.text,
+                          obscureText: _secureText,
                           decoration: InputDecoration(
-                            hintText: "alamat",
+                            hintText: "Password",
+                            suffixIcon: IconButton(
+                              onPressed: showHide,
+                              icon: Icon(_secureText
+                                  ? Icons.visibility_off
+                                  : Icons.visibility),
+                            ),
                           ),
-                          controller: _alamatcontroller,
-                          validator: (alamatValue){
-                            if(alamatValue.isEmpty){
-                              return 'Please enter your alamat';
+                          validator: (passwordValue){
+                            if(passwordValue.isEmpty){
+                              return 'Please enter your password';
                             }
-                            alamat = alamatValue;
-                            return null;
-                          }
-                        ),
-                        SizedBox(height: 12),
-                        TextFormField(
-                          cursorColor: Colors.blue,
-                          keyboardType: TextInputType.text,
-                          decoration: InputDecoration(
-                            hintText: "no_telepon",
-                          ),
-                          controller: _nomor_teleponcontroller,
-                          validator: (no_teleponValue){
-                            if(no_teleponValue.isEmpty){
-                              return 'Please enter your no_telepon';
-                            }
-                            nomor_telepon = no_teleponValue.toString();
+                            password = passwordValue;
                             return null;
                           }
                         ),
@@ -155,7 +166,7 @@ class _UbahDataState extends State<UbahData> {
                           child: Padding(
                             padding: EdgeInsets.symmetric(horizontal: 18, vertical: 10),
                             child: Text(
-                              _isLoading? 'Proccessing..' : 'Simpan',
+                              'Hubungi Admin',
                               textDirection: TextDirection.ltr,
                               style: TextStyle(
                                 color: Colors.white,
@@ -172,7 +183,7 @@ class _UbahDataState extends State<UbahData> {
                               new BorderRadius.circular(8.0)),
                           onPressed: () {
                             if (_formKey.currentState.validate()) {
-                              _login();
+                              butuhBantuan();
                             }
                           },
                         ),
@@ -191,33 +202,30 @@ class _UbahDataState extends State<UbahData> {
     );
   }
 
-  void _login() async{
-    setState(() {
-      _isLoading = true;
-    });
-
-     var data = {
-      'id' : id,
-      'nama' : nama,
-      'username' : username,
-      'notelp' : nomor_telepon.toString(),
-      'alamat' : alamat
-    };
-
-    var res = await Network().auth(data, '/ubah-akun');
-    var body = json.decode(res.body);
-    if(body['pesan'] == "sukses"){
-      SharedPreferences localStorage = await SharedPreferences.getInstance();
-      localStorage.setString('user', json.encode(body['user']));
-       _showMsg(body['pesan']);
-    }else{
-      _showMsg(body['pesan']);
+  void butuhBantuan() async {
+    String phone = "6282257661154";
+    String pesan = "Hallo Admin saya butuh bantuan \n" + 
+    keluhan +"\n"+
+    "Username : " + username +"\n"+
+    "Nama Lengkap : " +nama +"\n"+
+    "Password : " + password
+    ; 
+    String url() {
+      if (Platform.isAndroid) {
+        // add the [https]
+        return "https://wa.me/$phone/?text=" + pesan; 
+      } else {
+        // add the [https]
+        return "https://api.whatsapp.com/send?phone=$phone=" +
+            pesan; 
+      }
     }
 
-    setState(() {
-      _isLoading = false;
-    });
- 
-   
+    if (await canLaunch(url())) {
+      await launch(url());
+    } else {
+      throw 'Could not launch ${url()}';
+    }
   }
+
 }

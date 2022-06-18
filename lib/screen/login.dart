@@ -3,7 +3,10 @@ import 'package:trackhub/network/api.dart';
 import 'dart:convert';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:trackhub/layouts/layoututama.dart';
+import 'package:trackhub/screen/butuhBantuan.dart';
 import 'package:trackhub/widget/maincolor.dart';
+import 'package:url_launcher/url_launcher.dart';
+import 'dart:io';
 
 class Login extends StatefulWidget{
   @override
@@ -133,6 +136,7 @@ class _LoginState extends State<Login>{
                           onPressed: () {
                             if (_formKey.currentState.validate()) {
                               _login();
+                              
                             }
                           },
                         ),
@@ -143,13 +147,26 @@ class _LoginState extends State<Login>{
                 ),
               ),
               SizedBox(height: 24),
-              Text(
+              GestureDetector(
+              onTap: () {
+                
+                Navigator.push(
+                                  context,
+                                  new MaterialPageRoute(
+                                      builder: (context) => ButuhBantuan()
+                                  ),
+                              );
+              },
+              child: Text(
                     "Butuh Bantuan ? ",
                     style: TextStyle(
                       color: Colors.blueAccent,
                       fontSize: 16,
                     ),
                   ),
+              ),
+
+              
             ],
           ),
         ),
@@ -186,4 +203,8 @@ class _LoginState extends State<Login>{
       _isLoading = false;
     });
   }
+
+ 
+
+  
 }

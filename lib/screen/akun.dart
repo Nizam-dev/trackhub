@@ -4,6 +4,7 @@ import 'package:trackhub/network/api.dart';
 import 'dart:convert';
 import 'package:trackhub/screen/home.dart';
 import 'package:trackhub/screen/splashscreen.dart';
+import 'package:trackhub/screen/ubahData.dart';
 import 'package:trackhub/screen/ubahPassword.dart';
 import 'package:trackhub/widget/maincolor.dart';
 
@@ -80,7 +81,12 @@ class _AkunState extends State<Akun> {
                     child: RaisedButton(
                           child: Text("Ubah Data Akun"),
                           onPressed: (){
-                            
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => UbahData()
+                                ),
+                            );
                           },
                           color: Maincolor.PrimaryColor,
                           textColor: Colors.white,
