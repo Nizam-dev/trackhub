@@ -10,9 +10,9 @@ void main() {
 class MyApp extends StatelessWidget{
   @override
   Widget build(BuildContext context) {
-    return MaterialApp( //use MaterialApp() widget like this
-      home: Home() //create new widget class for this 'home' to 
-                   // escape 'No MediaQuery widget found' error
+    return MaterialApp( 
+      debugShowCheckedModeBanner: false,
+      home: Home()
     );
   }
 }
