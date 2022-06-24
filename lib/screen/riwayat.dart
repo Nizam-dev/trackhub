@@ -29,7 +29,9 @@ class _RiwayatState extends State<Riwayat> {
             backgroundColor: Colors.white,
             automaticallyImplyLeading: false,
         ),
-      body: Container(
+      body: RefreshIndicator(
+      onRefresh: getRiwayat,
+      child: Container(
         width: MediaQuery.of(context).size.width,
         padding: EdgeInsets.only(top: 25, left: 15,right: 15),
         child: SingleChildScrollView(
@@ -54,10 +56,11 @@ class _RiwayatState extends State<Riwayat> {
           )
         )
       ),
+      ),
     );
   }
 
-  void getRiwayat() async{
+  Future getRiwayat() async{
     var res = await Network().getData("/list-riwayat-penumpang");
     var body = json.decode(res.body);
     setState(() {

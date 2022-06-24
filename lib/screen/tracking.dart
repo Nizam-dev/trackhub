@@ -15,7 +15,7 @@ class Tracking extends StatefulWidget {
 }
 
 class _TrackingState extends State<Tracking> {
-  String user_id, angkutan_id;
+  String user_id, angkutan_id,nama;
   double la_awal, lo_awal;
   bool mulai = true;
   bool trackingActive = false;
@@ -34,6 +34,7 @@ class _TrackingState extends State<Tracking> {
 
     if (user != null) {
       setState(() {
+        nama = user['nama'].toString();
         user_id = user['id'].toString();
         angkutan_id = user['angkutan_id'].toString();
       });
@@ -74,41 +75,63 @@ class _TrackingState extends State<Tracking> {
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.startDocked,
       floatingActionButton: Container(
-        width: 160,
-        height: 100,
+        width: 180,
+        height: 117,
         padding: EdgeInsets.symmetric(vertical: 20),
         child: FlatButton(
           child: Padding(
-            padding: EdgeInsets.symmetric(horizontal: 18, vertical: 5),
-            child: Row(
-              children: [
-                Switch(
-            value: trackingActive,
-            onChanged: (value) {
-              setState(() {
-                trackingActive = value;
-                if(trackingActive == false){
-                  
-                }
-              });
-            },
-            activeTrackColor: Colors.lightGreenAccent,
-            activeColor: Colors.green,
-          ),
-                Text('dada',
-              textDirection: TextDirection.ltr,
-              style: TextStyle(
-                color: Colors.black,
-                fontSize: 10.0,
-                decoration: TextDecoration.none,
-                fontWeight: FontWeight.normal,
-              ),
-            ),
-              ],
-            )
-          ),
+              padding: EdgeInsets.only(left: 5,right: 5,top: 3),
+              child: Column(
+                children: [
+                  Row(
+                    children: [
+                      Flexible(
+                        flex: 70,
+                        child: Align(
+                          alignment: Alignment.centerLeft,
+                          child: Text("LIN 1"),
+                        ),
+                      ),
+                      Flexible(
+                        flex: 30,
+                        child: Align(
+                          alignment: Alignment.centerLeft,
+                          child: Icon(
+                            Icons.location_on,
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                  Row(
+                    children: [
+                      Flexible(
+                        flex: 60,
+                        child: Align(
+                          alignment: Alignment.centerLeft,
+                          child: Text("Banyuwangi"),
+                        ),
+                      ),
+                      Flexible(
+                        flex: 40,
+                        child: Switch(
+                          value: trackingActive,
+                          onChanged: (value) {
+                            setState(() {
+                              trackingActive = value;
+                              if (trackingActive == false) {}
+                            });
+                          },
+                          activeTrackColor: Colors.lightGreenAccent,
+                          activeColor: Colors.green,
+                        ),
+                      ),
+                    ],
+                  ),
+                ],
+              )),
           color: Colors.purple,
-          disabledColor: Colors.grey,
+          disabledColor: Color.fromARGB(200, 238, 203, 26),
           shape: new RoundedRectangleBorder(
               borderRadius: new BorderRadius.circular(10)),
         ),

@@ -113,12 +113,11 @@ class _AbsenQrcodeState extends State<AbsenQrcode> {
     };
     var res = await Network().auth(data, '/scan-penumpang');
     var body = json.decode(res.body);
-    print(body);
       setState((){
         if(body['pesan'] == "sukses"){
           qrText =   "Data $codeQr Ditemukan";
-          dataku = body["data"];
-          ditemukan = true;
+          // dataku = body["data"];
+          // ditemukan = true;
         }else{
           qrText =   "Data $codeQr Tidak Ditemukan";
         }
