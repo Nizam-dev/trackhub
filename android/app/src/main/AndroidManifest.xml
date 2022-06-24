@@ -24,7 +24,7 @@
    <application
         android:usesCleartextTraffic="true"
         android:label="trackhub"
-        android:icon="@mipmap/ic_launcher">
+        android:icon="@mipmap/launcher_icon">
         <meta-data android:name="com.google.android.geo.API_KEY"
                android:value="AIzaSyDIBF939STG2WUQzUkYaG4wovSqyysKo50"/>
         <activity
