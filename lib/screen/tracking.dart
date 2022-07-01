@@ -95,7 +95,7 @@ class _TrackingState extends State<Tracking> {
             activeTrackColor: Colors.lightGreenAccent,
             activeColor: Colors.green,
           ),
-                Text('dada',
+                Text('',
               textDirection: TextDirection.ltr,
               style: TextStyle(
                 color: Colors.black,
