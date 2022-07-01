@@ -154,7 +154,7 @@ class _AkunState extends State<Akun> {
                   shape: new RoundedRectangleBorder(
                       borderRadius: new BorderRadius.circular(15)),
                   onPressed: () {
-                    logout();
+                    confirm_logout();
                   },
                 ),
               ),
@@ -163,6 +163,94 @@ class _AkunState extends State<Akun> {
         ),
       ),
     );
+  }
+
+  void confirm_logout(){
+    showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return Dialog(
+            shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(20.0)), //this right here
+            child: Container(
+              height: 200,
+              child: Padding(
+                padding: const EdgeInsets.all(12.0),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Align(
+                      child: Text(
+                        "Apakah Anda Akan Keluar?",
+                        style: TextStyle(
+                            color: Maincolor.PrimaryColor,
+                            fontWeight: FontWeight.bold),
+                      ),
+                    ),
+                    SizedBox(height: 20),
+                    SizedBox(
+                      width: double.infinity,
+                      height: 40,
+                      child: FlatButton(
+                          child: Padding(
+                            padding: EdgeInsets.symmetric(
+                                horizontal: 18, vertical: 5),
+                            child: Text(
+                              'Keluar',
+                              textDirection: TextDirection.ltr,
+                              style: TextStyle(
+                                color: Colors.white,
+                                fontSize: 18.0,
+                                decoration: TextDecoration.none,
+                                fontWeight: FontWeight.normal,
+                              ),
+                            ),
+                          ),
+                          color: Colors.red,
+                          disabledColor: Colors.grey,
+                          shape: new RoundedRectangleBorder(
+                              borderRadius: new BorderRadius.circular(15)),
+                          onPressed: () {
+                            Navigator.of(context).pop();
+                            logout();
+                          }),
+                    ),
+                    SizedBox(height: 10),
+                    SizedBox(
+                      width: double.infinity,
+                      height: 40,
+                      child: FlatButton(
+                          child: Padding(
+                            padding: EdgeInsets.symmetric(
+                                horizontal: 18, vertical: 5),
+                            child: Text(
+                              'Batal',
+                              textDirection: TextDirection.ltr,
+                              style: TextStyle(
+                                color: Colors.white,
+                                fontSize: 18.0,
+                                decoration: TextDecoration.none,
+                                fontWeight: FontWeight.normal,
+                              ),
+                            ),
+                          ),
+                          color: Colors.grey,
+                          disabledColor: Colors.grey,
+                          shape: new RoundedRectangleBorder(
+                              borderRadius: new BorderRadius.circular(15)),
+                          onPressed: () {
+                            Navigator.of(context).pop();
+                          }),
+                    ),
+                    
+                   
+                  ],
+                ),
+              ),
+            ),
+          );
+        });
   }
 
   void logout() async {
