@@ -8,6 +8,7 @@ import 'package:trackhub/screen/ubahData.dart';
 import 'package:trackhub/screen/ubahPassword.dart';
 import 'package:trackhub/widget/maincolor.dart';
 
+
 class Akun extends StatefulWidget {
   @override
   _AkunState createState() => _AkunState();
@@ -15,7 +16,9 @@ class Akun extends StatefulWidget {
 
 class _AkunState extends State<Akun> {
   String nama = '';
+  String nama_angkutan = '';
   String alamat = '';
+  String noTelp = '';
 
   @override
   void initState() {
@@ -30,7 +33,9 @@ class _AkunState extends State<Akun> {
     if (user != null) {
       setState(() {
         nama = user['nama'];
+        nama_angkutan = user['nama_angkutan'];
         alamat = user['alamat'];
+        noTelp = user['notelp'];
       });
     }
   }
@@ -55,17 +60,30 @@ class _AkunState extends State<Akun> {
                 padding: EdgeInsets.symmetric(vertical: 25),
                 child: Align(
                   alignment: Alignment.center,
-                  child: Image.asset("assets/images/logo.png", width: 120),
+                  child: Image.asset("assets/images/logo.png", width: 90),
                 )),
             Text(
               "${nama}",
-              style: TextStyle(fontSize: 35),
+              style: TextStyle(fontSize: 32),
+            ),
+            SizedBox(height: 2),
+             Text(
+              "${nama_angkutan}",
+              style: TextStyle(fontSize: 24),
             ),
             SizedBox(height: 10),
             Text(
               "${alamat}",
               style: TextStyle(fontSize: 16, color: Colors.grey),
             ),
+            Text(
+              "${noTelp}",
+              style: TextStyle(fontSize: 16, color: Colors.grey),
+            ),
+
+            SizedBox(height: 15),
+
+
             Padding(
               padding: EdgeInsets.symmetric(vertical: 10, horizontal: 25),
               child: SizedBox(
@@ -266,3 +284,7 @@ class _AkunState extends State<Akun> {
     // }
   }
 }
+
+
+
+

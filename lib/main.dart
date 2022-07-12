@@ -12,16 +12,6 @@ class MyApp extends StatelessWidget{
   Widget build(BuildContext context) {
     return MaterialApp( 
       debugShowCheckedModeBanner: false,
-      home: Home()
-    );
-  }
-}
-
-class Home extends StatelessWidget {
-  // This widget is the root of your application.
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
       home: Scaffold(
         body:  Center(
           child : Splashscreen()
@@ -30,3 +20,4 @@ class Home extends StatelessWidget {
     );
   }
 }
+

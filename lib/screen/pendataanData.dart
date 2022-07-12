@@ -135,33 +135,6 @@ class _PendataanDataState extends State<PendataanData> {
                               ),
                             ),
                           ),
-                          color: Colors.orange,
-                          disabledColor: Colors.grey,
-                          shape: new RoundedRectangleBorder(
-                              borderRadius: new BorderRadius.circular(15)),
-                          onPressed: () {
-                            Navigator.of(context).pop();
-                          }),
-                    ),
-                    SizedBox(height: 10),
-                    SizedBox(
-                      width: double.infinity,
-                      height: 40,
-                      child: FlatButton(
-                          child: Padding(
-                            padding: EdgeInsets.symmetric(
-                                horizontal: 18, vertical: 5),
-                            child: Text(
-                              'Menu Pendataan',
-                              textDirection: TextDirection.ltr,
-                              style: TextStyle(
-                                color: Colors.white,
-                                fontSize: 18.0,
-                                decoration: TextDecoration.none,
-                                fontWeight: FontWeight.normal,
-                              ),
-                            ),
-                          ),
                           color: Maincolor.PrimaryColor,
                           disabledColor: Colors.grey,
                           shape: new RoundedRectangleBorder(

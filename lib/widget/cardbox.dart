@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:trackhub/widget/maincolor.dart';
+import 'package:intl/intl.dart';
 
 class Cardbox extends StatelessWidget {
   String tgl_input_penumpang;
@@ -16,6 +17,15 @@ class Cardbox extends StatelessWidget {
 
   @override
   Widget build(BuildContext context){
+    var tgl_created = tgl_input_penumpang;
+  if(tgl_input_penumpang != null){
+     var inputFormat = DateFormat('yyyy-MM-dd HH:mm:ss');
+var inputDate = inputFormat.parse(tgl_input_penumpang); // <-- dd/MM 24H format
+
+var outputFormat = DateFormat('dd/MM/yyyy hh:mm');
+tgl_created = outputFormat.format(inputDate);
+  }
+
     return Card(
       shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(15),
@@ -36,7 +46,7 @@ class Cardbox extends StatelessWidget {
                       flex:50,
                       child: Container(
                         padding: EdgeInsets.only(left: 8),
-                        child: Text('${tgl_input_penumpang}',style: TextStyle(color: Colors.white,
+                        child: Text('${tgl_created}',style: TextStyle(color: Colors.white,
                         fontSize: 15,
                         fontWeight: FontWeight.w500
                         )),

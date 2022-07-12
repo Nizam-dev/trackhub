@@ -8,38 +8,44 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'dart:convert';
 
 class LayoutUtama extends StatefulWidget {
-
+  int index;
+  LayoutUtama({this.index});
   @override
   _LayoutUtamaState createState() => _LayoutUtamaState();
 }
 
 class _LayoutUtamaState extends State<LayoutUtama> {
   int _selectedNavbar = 0;
-   
+
   var listpage = <Widget>[
-              Tracking(),
-              Pendataan(),
-              Riwayat(),
-              Akun(),
+    Tracking(),
+    Pendataan(),
+    Riwayat(),
+    Akun(),
   ];
-  String role ='';
+  String role = '';
 
   @override
-  void initState(){
+  void initState() {
     _loadUserData();
     super.initState();
+    if (widget.index != null) {
+      setState(() {
+        _selectedNavbar = widget.index;
+      });
+    }
   }
 
-  _loadUserData() async{
+  _loadUserData() async {
     SharedPreferences localStorage = await SharedPreferences.getInstance();
     var user = jsonDecode(localStorage.getString('user'));
-    if(user != null) {
-    setState(() {
-          role = user['profesi'];
-            if(user['profesi'] != "supir"){
-              listpage.removeAt(0);
-            }   
-        });
+    if (user != null) {
+      setState(() {
+        role = user['profesi'];
+        if (user['profesi'] != "supir") {
+          listpage.removeAt(0);
+        }
+      });
     }
 
     // if(user != null) {
@@ -66,14 +72,11 @@ class _LayoutUtamaState extends State<LayoutUtama> {
     // }
   }
 
-
   void _changeSelectedNavBar(int index) {
-    
     setState(() {
       _selectedNavbar = index;
     });
   }
-
 
   @override
   Widget build(BuildContext context) {
@@ -84,13 +87,12 @@ class _LayoutUtamaState extends State<LayoutUtama> {
       ),
       bottomNavigationBar: BottomNavigationBar(
         items: <BottomNavigationBarItem>[
-          if(role == "supir")...[
-              BottomNavigationBarItem(
+          if (role == "supir") ...[
+            BottomNavigationBarItem(
               icon: Icon(Icons.location_on),
               title: Text('Tracking'),
             ),
           ],
-          
           BottomNavigationBarItem(
             icon: Icon(Icons.person_add),
             title: Text('Pendataan'),

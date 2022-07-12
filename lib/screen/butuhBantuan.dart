@@ -152,8 +152,13 @@ class _ButuhBantuanState extends State<ButuhBantuan> {
                                 contentPadding: const EdgeInsets.symmetric(
                                     vertical: 1.0, horizontal: 5)
                             ),
-                            onChanged: (namaValue) {
+                           
+                        validator: (namaValue) {
+                              if (namaValue.isEmpty) {
+                                return 'Please enter your name';
+                              }
                               nama = namaValue;
+                              return null;
                             }),
                         SizedBox(height: 12),
                         Align(
@@ -206,7 +211,9 @@ class _ButuhBantuanState extends State<ButuhBantuan> {
                             shape: new RoundedRectangleBorder(
                                 borderRadius: new BorderRadius.circular(15.0)),
                             onPressed: () {
+                              if (_formKey.currentState.validate()) {
                               butuhBantuan();
+                              }
                             },
                           ),
                         ),
@@ -228,7 +235,7 @@ class _ButuhBantuanState extends State<ButuhBantuan> {
     var us = username == "" ? "" : "Username : $username \n";
     var ps = password == "" ? "" : "Password : $password \n";
     var nm = nama == "" ? "" : "Nama Lengkap : $nama \n";
-    String pesan = "Hallo Admin saya butuh bantuan \n" + keluhan + us + nm + ps;
+    String pesan = "Hallo Admin saya butuh bantuan \n" +"\n"+ keluhan +"\n"+ us + nm + ps;
     String url() {
       if (Platform.isAndroid) {
         // add the [https]
