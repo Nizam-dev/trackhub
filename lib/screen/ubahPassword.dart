@@ -16,6 +16,7 @@ class _UbahPasswordState extends State<UbahPassword> {
   var confirmpassword, password;
   final _scaffoldKey = GlobalKey<ScaffoldState>();
   bool _secureText = true;
+  bool _secureText2 = true;
   int iduser;
 
   @override
@@ -38,6 +39,12 @@ class _UbahPasswordState extends State<UbahPassword> {
   showHide() {
     setState(() {
       _secureText = !_secureText;
+    });
+  }
+
+   showHide2() {
+    setState(() {
+      _secureText2 = !_secureText2;
     });
   }
 
@@ -123,15 +130,15 @@ class _UbahPasswordState extends State<UbahPassword> {
                         TextFormField(
                             cursorColor: Colors.blue,
                             keyboardType: TextInputType.text,
-                            obscureText: _secureText,
+                            obscureText: _secureText2,
                             decoration: InputDecoration(
                               hintText: "Konfirmasi Password",
                               border: OutlineInputBorder(),
                               contentPadding: const EdgeInsets.symmetric(
                                   vertical: 1.0, horizontal: 5),
                               suffixIcon: IconButton(
-                                onPressed: showHide,
-                                icon: Icon(_secureText
+                                onPressed: showHide2,
+                                icon: Icon(_secureText2
                                     ? Icons.visibility_off
                                     : Icons.visibility),
                               ),

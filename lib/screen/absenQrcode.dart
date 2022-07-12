@@ -6,6 +6,7 @@ import 'package:flutter/services.dart';
 import 'package:qr_code_scanner/qr_code_scanner.dart';
 import 'package:trackhub/network/api.dart';
 import 'dart:convert';
+import 'package:trackhub/widget/maincolor.dart';
 
 import 'package:trackhub/widget/cardbox.dart';
 
@@ -116,15 +117,114 @@ class _AbsenQrcodeState extends State<AbsenQrcode> {
       setState((){
         if(body['pesan'] == "sukses"){
           qrText =   "Data $codeQr Ditemukan";
+          var dataPenumpang = body['data'][0];
+          modalDialog(dataPenumpang["nama"].toString());
           // dataku = body["data"];
           // ditemukan = true;
         }else{
           qrText =   "Data $codeQr Tidak Ditemukan";
+      controller.resumeCamera();
+
         }
       });
-      controller.resumeCamera();
       
     });
   }
+
+  void modalDialog(String NamaQr) {
+    String NamaPenumpang = NamaQr;
+    showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return Dialog(
+            shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(20.0)), //this right here
+            child: Container(
+              height: 200,
+              child: Padding(
+                padding: const EdgeInsets.all(12.0),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Align(
+                      child: Text(
+                        "Absen Penumpang $NamaPenumpang Berhasil",
+                        style: TextStyle(
+                            color: Maincolor.PrimaryColor,
+                            fontWeight: FontWeight.bold),
+                      ),
+                    ),
+
+                     SizedBox(height: 20),
+                    SizedBox(
+                      width: double.infinity,
+                      height: 40,
+                      child: FlatButton(
+                          child: Padding(
+                            padding: EdgeInsets.symmetric(
+                                horizontal: 18, vertical: 5),
+                            child: Text(
+                              'Absen Lagi',
+                              textDirection: TextDirection.ltr,
+                              style: TextStyle(
+                                color: Colors.white,
+                                fontSize: 18.0,
+                                decoration: TextDecoration.none,
+                                fontWeight: FontWeight.normal,
+                              ),
+                            ),
+                          ),
+                          color: Maincolor.PrimaryColor,
+                          disabledColor: Colors.grey,
+                          shape: new RoundedRectangleBorder(
+                              borderRadius: new BorderRadius.circular(15)),
+                          onPressed: () {
+                            Navigator.of(context).pop();
+                          controller.resumeCamera();
+
+                          }),
+                    ),
+
+                    SizedBox(height: 20),
+                    SizedBox(
+                      width: double.infinity,
+                      height: 40,
+                      child: FlatButton(
+                          child: Padding(
+                            padding: EdgeInsets.symmetric(
+                                horizontal: 18, vertical: 5),
+                            child: Text(
+                              'Tutup',
+                              textDirection: TextDirection.ltr,
+                              style: TextStyle(
+                                color: Colors.white,
+                                fontSize: 18.0,
+                                decoration: TextDecoration.none,
+                                fontWeight: FontWeight.normal,
+                              ),
+                            ),
+                          ),
+                          color: Colors.red,
+                          disabledColor: Colors.grey,
+                          shape: new RoundedRectangleBorder(
+                              borderRadius: new BorderRadius.circular(15)),
+                          onPressed: () {
+                            Navigator.of(context).pop();
+                            menuPendataan();
+                          }),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          );
+        });
+  }
+
+  void menuPendataan() {
+    return Navigator.of(context).pop();
+  }
+
 
 }

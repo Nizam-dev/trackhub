@@ -1,7 +1,9 @@
+import 'dart:async';
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:trackhub/layouts/layoututama.dart';
 import 'package:trackhub/network/api.dart';
 import 'package:trackhub/widget/maincolor.dart';
 
@@ -13,7 +15,7 @@ class UbahData extends StatefulWidget {
 class _UbahDataState extends State<UbahData> {
   bool _isLoading = false;
   final _formKey = GlobalKey<FormState>();
-  var username, nama, alamat, nomor_telepon, id;
+  var username, nama, alamat, nomor_telepon, id, role;
   final _scaffoldKey = GlobalKey<ScaffoldState>();
   bool _secureText = true;
 
@@ -36,6 +38,7 @@ class _UbahDataState extends State<UbahData> {
     if (user != null) {
       setState(() {
         id = user['id'];
+        role = user['profesi'];
         _namacontroller.text = user['nama'];
         _alamatcontroller.text = user['alamat'];
         _usernamecontroller.text = user['username'];
@@ -280,6 +283,12 @@ class _UbahDataState extends State<UbahData> {
       SharedPreferences localStorage = await SharedPreferences.getInstance();
       localStorage.setString('user', json.encode(body['user']));
       _showMsg(body['pesan']);
+      int idx = role == "supir" ? 3 : 2;
+      Timer(Duration(milliseconds: 200), () {
+         Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (context) =>
+    LayoutUtama(index: idx)), (Route<dynamic> route) => false);
+      });
+      
     } else {
       _showMsg(body['pesan']);
     }
