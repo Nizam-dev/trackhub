@@ -124,7 +124,8 @@ class _PendataanFilterState extends State<PendataanFilter> {
                                 lastDate: DateTime(2025));
                             if (pickedDate != null) {
                               String formattedDate =
-                                  DateFormat('dd-MM-yyyy').format(pickedDate);
+                                  // DateFormat('dd-MM-yyyy').format(pickedDate);
+                              DateFormat('yyyy-MM-dd').format(pickedDate);
                               setState(() {
                                 dateinput.text = formattedDate;
                                 tgllahir = formattedDate;

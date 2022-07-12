@@ -3,7 +3,7 @@ import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
 
 class Network{
-  final String _url = 'https://d513-103-40-54-214.ngrok.io/api';
+  final String _url = 'http://192.168.1.3/trackhubweb/public/api';
   // final String _url = 'http://192.168.125.250/TrackHub/public/api';
   String token;
 
