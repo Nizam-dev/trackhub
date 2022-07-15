@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:trackhub/network/api.dart';
 import 'package:trackhub/widget/cardbox.dart';
 
@@ -11,11 +12,27 @@ class Riwayat extends StatefulWidget {
 
 class _RiwayatState extends State<Riwayat> {
   var data;
+  var id;
   @override
   void initState() {
+
     super.initState();
-    this.getRiwayat();
+    _loadUserData();
+
   }
+
+  _loadUserData() async {
+    SharedPreferences localStorage = await SharedPreferences.getInstance();
+    var user = jsonDecode(localStorage.getString('user'));
+
+    if (user != null) {
+      setState(() {
+        id = user['id'];
+        getRiwayat();
+      });
+    }
+  }
+
 
   @override
   Widget build(BuildContext context) {
@@ -86,7 +103,8 @@ class _RiwayatState extends State<Riwayat> {
   }
 
   Future getRiwayat() async {
-    var res = await Network().getData("/list-riwayat-penumpang");
+
+    var res = await Network().getData("/list-riwayat-penumpang/$id");
     var body = json.decode(res.body);
     setState(() {
       data = body["data"];
