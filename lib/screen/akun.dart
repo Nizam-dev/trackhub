@@ -33,7 +33,7 @@ class _AkunState extends State<Akun> {
     if (user != null) {
       setState(() {
         nama = user['nama'];
-        nama_angkutan = user['nama_angkutan'];
+        nama_angkutan = user['profesi'] == "supir" ? user['nama_angkutan']:'Petugas Terminal';
         alamat = user['alamat'];
         noTelp = user['notelp'];
       });
@@ -69,7 +69,7 @@ class _AkunState extends State<Akun> {
             SizedBox(height: 2),
              Text(
               "${nama_angkutan}",
-              style: TextStyle(fontSize: 24),
+              style: TextStyle(fontSize: 21),
             ),
             SizedBox(height: 10),
             Text(

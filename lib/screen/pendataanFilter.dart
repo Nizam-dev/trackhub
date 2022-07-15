@@ -178,7 +178,13 @@ class _PendataanFilterState extends State<PendataanFilter> {
     setState(() {
       _isLoading = true;
     });
-    var data = {'nama': nama, 'tgl_lahir': tgllahir};
+     var inputFormat = DateFormat('dd-MM-yyyy');
+var inputDate = inputFormat.parse(tgllahir); // <-- dd/MM 24H format
+
+var outputFormat = DateFormat('yyyy-MM-dd');
+var tgl_lahir = outputFormat.format(inputDate);
+    var data = {'nama': nama, 'tgl_lahir': tgl_lahir};
+    print(tgl_lahir);
 
     var res = await Network().auth(data, '/daftar-penumpang');
     var body = json.decode(res.body);
