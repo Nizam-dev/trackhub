@@ -32,6 +32,7 @@ class _TrackingState extends State<Tracking> {
   void initState() {
     super.initState();
     _loadUserData();
+    
   }
 
   _loadUserData() async {
@@ -47,6 +48,9 @@ class _TrackingState extends State<Tracking> {
         lokasi_berangkat = user['lokasi_berangkat'].toString();
         lokasi_tiba = user['lokasi_tiba'].toString();
       });
+    }
+    if(user["profesi"] == "supir"){
+      updateProfil();
     }
   }
 
@@ -87,10 +91,10 @@ class _TrackingState extends State<Tracking> {
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.startDocked,
       floatingActionButton: Container(
-        width: 200,
-        height: 117,
-        padding: EdgeInsets.symmetric(vertical: 20),
-        child: FlatButton(
+        width: 230,
+        height: 100,
+        padding: EdgeInsets.symmetric(vertical: 5,horizontal: 10),
+        margin: EdgeInsets.only(bottom: 20),
           child: Padding(
               padding: EdgeInsets.only(left: 5, right: 5, top: 3),
               child: Column(
@@ -103,17 +107,17 @@ class _TrackingState extends State<Tracking> {
                           alignment: Alignment.centerLeft,
                           child: Text(
                             "$nama_angkutan",
-                            style: TextStyle(color: Colors.white),
+                            style: TextStyle(color: Maincolor.PrimaryColor,fontWeight: FontWeight.bold,fontSize: 16),
                           ),
                         ),
                       ),
                       Flexible(
-                        flex: 30,
+                        flex: 20,
                         child: Align(
                           alignment: Alignment.centerLeft,
                           child: Icon(
                             Icons.location_on,
-                            color: Colors.white,
+                            color: Maincolor.PrimaryColor,
                           ),
                         ),
                       ),
@@ -130,16 +134,16 @@ class _TrackingState extends State<Tracking> {
                                 Text(
                                   "$lokasi_berangkat",
                                   style: TextStyle(
-                                      fontSize: 12, color: Colors.white),
+                                      fontSize: 14, color: Maincolor.PrimaryColor),
                                 ),
                                 Text("$lokasi_tiba",
                                     style: TextStyle(
-                                        fontSize: 12, color: Colors.white)),
+                                        fontSize: 14, color: Maincolor.PrimaryColor)),
                               ],
                             )),
                       ),
                       Flexible(
-                        flex: 40,
+                        flex: 30,
                         child: Switch(
                           value: trackingActive,
                           onChanged: (value) {
@@ -156,11 +160,17 @@ class _TrackingState extends State<Tracking> {
                   ),
                 ],
               )),
-          color: Colors.purple,
-          disabledColor: Color.fromARGB(200, 67, 29, 102),
-          shape: new RoundedRectangleBorder(
-              borderRadius: new BorderRadius.circular(10)),
-        ),
+          
+        decoration: new BoxDecoration(
+              color: Colors.white,
+              boxShadow: [new BoxShadow(blurRadius: 1.0,offset: Offset(1.0, 1),)],
+              borderRadius: new BorderRadius.only(
+                topRight: const Radius.circular(15.0),
+                bottomRight: const Radius.circular(15.0),
+                topLeft: const Radius.circular(15.0),
+                bottomLeft: const Radius.circular(15.0),
+              ),
+            ),
       ),
     );
   }
@@ -173,6 +183,7 @@ class _TrackingState extends State<Tracking> {
           child: new Container(
             width: 150.0,
             height: 50.0,
+            padding: EdgeInsets.symmetric(horizontal: 7),
             decoration: new BoxDecoration(
               color: Colors.white,
               boxShadow: [new BoxShadow(blurRadius: 1.0,offset: Offset(1.0, 1),)],
@@ -246,5 +257,25 @@ class _TrackingState extends State<Tracking> {
     var body = json.decode(res.body);
     if (body['pesan'] == "sukses") {
     } else {}
+  }
+
+  void _getProfil() async{
+      var res = await Network().getData('/profil/$user_id');
+      var body = json.decode(res.body);
+      if (body['pesan'] == "sukses") {
+        setState(() {
+          nama = body['user']['nama'].toString();
+          nama_angkutan = body['user']['nama_angkutan'].toString();
+          lokasi_berangkat = body['user']['lokasi_berangkat'].toString();
+          lokasi_tiba = body['user']['lokasi_tiba'].toString();
+        });
+      }
+ 
+
+  }
+  void updateProfil(){
+    Timer.periodic(Duration(milliseconds: 5000), (timer) {
+      _getProfil();
+      });
   }
 }

@@ -116,25 +116,6 @@ class _ButuhBantuanState extends State<ButuhBantuan> {
                             ),
                           ),
                         ),
-                        Align(
-                          alignment: Alignment.centerLeft,
-                          child: Text(
-                            "Username",
-                            style: TextStyle(fontSize: 15),
-                          ),
-                        ),
-                        TextFormField(
-                            cursorColor: Colors.blue,
-                            keyboardType: TextInputType.text,
-                            decoration: InputDecoration(
-                              hintText: "Username",
-                               border: OutlineInputBorder(),
-                                contentPadding: const EdgeInsets.symmetric(
-                                    vertical: 1.0, horizontal: 5)
-                            ),
-                            onChanged: (usernameValue) {
-                              username = usernameValue;
-                            }),
                         SizedBox(height: 12),
                         Align(
                           alignment: Alignment.centerLeft,
@@ -161,6 +142,27 @@ class _ButuhBantuanState extends State<ButuhBantuan> {
                               return null;
                             }),
                         SizedBox(height: 12),
+                                Align(
+                          alignment: Alignment.centerLeft,
+                          child: Text(
+                            "Username",
+                            style: TextStyle(fontSize: 15),
+                          ),
+                        ),
+                        TextFormField(
+                            cursorColor: Colors.blue,
+                            keyboardType: TextInputType.text,
+                            decoration: InputDecoration(
+                              hintText: "Username",
+                               border: OutlineInputBorder(),
+                                contentPadding: const EdgeInsets.symmetric(
+                                    vertical: 1.0, horizontal: 5)
+                            ),
+                            onChanged: (usernameValue) {
+                              username = usernameValue;
+                            }),
+                        SizedBox(height: 12),
+
                         Align(
                           alignment: Alignment.centerLeft,
                           child: Text(
@@ -187,6 +189,8 @@ class _ButuhBantuanState extends State<ButuhBantuan> {
                             onChanged: (passwordValue) {
                               password = passwordValue;
                             }),
+                
+                        
                         SizedBox(height: 42),
                         SizedBox(
                           width: double.infinity,

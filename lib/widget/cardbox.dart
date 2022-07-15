@@ -22,7 +22,7 @@ class Cardbox extends StatelessWidget {
      var inputFormat = DateFormat('yyyy-MM-dd HH:mm:ss');
 var inputDate = inputFormat.parse(tgl_input_penumpang); // <-- dd/MM 24H format
 
-var outputFormat = DateFormat('dd/MM/yyyy hh:mm');
+var outputFormat = DateFormat('dd/MM/yyyy HH:mm');
 tgl_created = outputFormat.format(inputDate);
   }
 

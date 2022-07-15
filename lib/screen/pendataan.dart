@@ -254,6 +254,8 @@ class _PendataanState extends State<Pendataan> {
                         textColor: Colors.white,
                         padding: EdgeInsets.fromLTRB(9, 9, 9, 9),
                         splashColor: Colors.grey,
+                        shape: new RoundedRectangleBorder(
+                          borderRadius: new BorderRadius.circular(15)),
                       ),
                     ),
                     SizedBox(height: 10),
@@ -273,6 +275,8 @@ class _PendataanState extends State<Pendataan> {
                         textColor: Colors.white,
                         padding: EdgeInsets.fromLTRB(9, 9, 9, 9),
                         splashColor: Colors.grey,
+                        shape: new RoundedRectangleBorder(
+                          borderRadius: new BorderRadius.circular(15)),
                       ),
                     ),
                   ],
