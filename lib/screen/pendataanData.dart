@@ -141,7 +141,7 @@ class _PendataanDataState extends State<PendataanData> {
                               borderRadius: new BorderRadius.circular(15)),
                           onPressed: () {
                             Navigator.of(context).pop();
-                            DataAngkutan();
+                            menuPendataan();
                           }),
                     ),
                     SizedBox(height: 10),
@@ -169,7 +169,7 @@ class _PendataanDataState extends State<PendataanData> {
                               borderRadius: new BorderRadius.circular(15)),
                           onPressed: () {
                             Navigator.of(context).pop();
-                            menuPendataan();
+                            DataAngkutan();
                           }),
                     ),
                   ],
