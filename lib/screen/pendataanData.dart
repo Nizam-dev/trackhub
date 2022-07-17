@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:trackhub/network/api.dart';
 import 'package:trackhub/widget/cardboxdata.dart';
 import 'package:trackhub/widget/maincolor.dart';
@@ -16,13 +17,26 @@ class PendataanData extends StatefulWidget {
 
 class _PendataanDataState extends State<PendataanData> {
   var data;
+  var id_user;
 
   final _scaffoldKey = GlobalKey<ScaffoldState>();
 
   @override
   void initState() {
+    _loadUserData();
     data = widget.data;
     super.initState();
+  }
+  _loadUserData() async {
+    SharedPreferences localStorage = await SharedPreferences.getInstance();
+    var user = jsonDecode(localStorage.getString('user'));
+
+    if (user != null) {
+      setState(() {
+        id_user = user['id'];
+
+      });
+    }
   }
 
   _showMsg(msg) {
@@ -68,7 +82,9 @@ class _PendataanDataState extends State<PendataanData> {
                     child: Text("Absen"),
                     onPressed: () {
                       absenSiswa(penumpang["id"].toString(),
-                          penumpang["nama"].toString());
+                          penumpang["nama"].toString()
+                     );
+
                     },
                     color: Maincolor.PrimaryColor,
                     textColor: Colors.white,
@@ -83,7 +99,7 @@ class _PendataanDataState extends State<PendataanData> {
   }
 
   void absenSiswa(String id, String nama) async {
-    var data = {'angkutan_id': widget.angkutan_id, 'id': id};
+    var data = {'angkutan_id': widget.angkutan_id, 'id': id,'user_id':id_user};
     var res = await Network().auth(data, '/absen-penumpang');
     var body = json.decode(res.body);
     if (body['pesan'] == "sukses") {

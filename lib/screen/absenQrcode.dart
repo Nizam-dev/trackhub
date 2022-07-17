@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'dart:async';
 import 'package:flutter/services.dart';
 import 'package:qr_code_scanner/qr_code_scanner.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:trackhub/network/api.dart';
 import 'dart:convert';
 import 'package:trackhub/widget/maincolor.dart';
@@ -12,11 +13,15 @@ import 'package:trackhub/widget/cardbox.dart';
 
 
 class AbsenQrcode extends StatefulWidget {
+  
   String id;
   AbsenQrcode(this.id);
   @override
   _AbsenQrcodeState createState() => _AbsenQrcodeState();
+
 }
+
+
 
 class _AbsenQrcodeState extends State<AbsenQrcode> {
    final GlobalKey qrKey= GlobalKey();
@@ -24,6 +29,24 @@ class _AbsenQrcodeState extends State<AbsenQrcode> {
   String qrText='Scanning.....';
   bool ditemukan = false;
   var dataku;
+   var id_user;
+
+   _loadUserData() async {
+     SharedPreferences localStorage = await SharedPreferences.getInstance();
+     var user = jsonDecode(localStorage.getString('user'));
+
+     if (user != null) {
+       setState(() {
+         id_user = user['id'];
+
+       });
+     }
+   }
+   void initState() {
+     super.initState();
+     _loadUserData();
+     print(id_user);
+   }
 
   // @override
 //  void initState(){
@@ -110,8 +133,9 @@ class _AbsenQrcodeState extends State<AbsenQrcode> {
       String codeQr = scanData.code;
       var data = {
       'angkutan_id' : widget.id,
-      'qrcode_penumpang' : codeQr
-    };
+      'qrcode_penumpang' : codeQr,
+        'user_id':id_user
+      };
     var res = await Network().auth(data, '/scan-penumpang');
     var body = json.decode(res.body);
       setState((){
@@ -225,6 +249,8 @@ class _AbsenQrcodeState extends State<AbsenQrcode> {
   void menuPendataan() {
     return Navigator.of(context).pop();
   }
+
+
 
 
 }
