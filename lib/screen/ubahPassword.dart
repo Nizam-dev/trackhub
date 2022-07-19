@@ -116,8 +116,8 @@ class _UbahPasswordState extends State<UbahPassword> {
                               ),
                             ),
                             validator: (passwordValue) {
-                              if (passwordValue.isEmpty) {
-                                return 'Please enter your password';
+                              if (passwordValue.length<8) {
+                                return 'Please enter your password min 8';
                               }
                               password = passwordValue;
                               return null;
