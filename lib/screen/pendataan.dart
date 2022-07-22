@@ -22,8 +22,14 @@ class _PendataanState extends State<Pendataan> {
   var id = <String>[];
   var pilihantrayek = <String>[];
   var sopir = <String>[];
+  var no_polisi = <String>[];
   var pilihansopir = <String>[];
+  var pilihannopolisi = <String>[];
   int _pilihan;
+  final TextEditingController _nopolcontroller = TextEditingController();
+  final _formKey = GlobalKey<FormState>();
+  var username;
+  final _scaffoldKey = GlobalKey<ScaffoldState>();
 
   List data;
   void initState() {
@@ -40,6 +46,7 @@ class _PendataanState extends State<Pendataan> {
         for (var item in data) {
           pilihantrayek.add(item["nama_angkutan"]);
           sopir.add(item["nama"]);
+          no_polisi.add(item["no_polisi"]);
           id.add(item["id_angkutan"].toString());
         }
       }
@@ -126,52 +133,95 @@ class _PendataanState extends State<Pendataan> {
                               setState(() {
                                 _pilihan = pilihantrayek.indexOf(value);
                                 _chosenValueTrayek = value;
-                                pilihansopir = <String>[sopir[_pilihan]];
-                                _chosenValueSopir = sopir[_pilihan];
+                                // pilihansopir = <String>[sopir[_pilihan]];
+                                // _chosenValueSopir = sopir[_pilihan];
+                                pilihannopolisi = <String>[no_polisi[_pilihan]];
+                                _chosenValueSopir = no_polisi[_pilihan];
+                                _nopolcontroller.text = _chosenValueSopir;
                               });
                             },
                           ),
                         ))),
-                Align(
-                  alignment: Alignment.centerLeft,
-                  child: Text(
-                    "Nama Sopir",
-                    style: TextStyle(fontSize: 15),
+                // Align(
+                //   alignment: Alignment.centerLeft,
+                //   child: Text(
+                //     "Nama Sopir",
+                //     style: TextStyle(fontSize: 15),
+                //   ),
+                // ),
+                // Container(
+                //     margin: EdgeInsets.symmetric(vertical: 10),
+                //     child: InputDecorator(
+                //         decoration: const InputDecoration(
+                //             border: OutlineInputBorder(),
+                //             contentPadding: const EdgeInsets.symmetric(
+                //                 vertical: 1.0, horizontal: 5)),
+                //         child: DropdownButtonHideUnderline(
+                //           child: DropdownButton<String>(
+                //             value: _chosenValueSopir,
+                //             //elevation: 5,
+                //             style: TextStyle(color: Colors.black),
+                //             items: pilihannopolisi
+                //                 .map<DropdownMenuItem<String>>((String value) {
+                //               return DropdownMenuItem<String>(
+                //                 value: value,
+                //                 child: Text(value),
+                //               );
+                //             }).toList(),
+                //             hint: Text(
+                //               "No Polisi",
+                //               style: TextStyle(
+                //                   color: Colors.black38,
+                //                   fontSize: 16,
+                //                   fontWeight: FontWeight.w600),
+                //             ),
+                //             onChanged: (String value) {
+                //               setState(() {
+                //                 _chosenValueSopir = value;
+                //               });
+                //             },
+                //           ),
+                //         ))),
+                Container(
+                  margin: EdgeInsets.only(top: 0),
+                  child: Padding(
+                    padding: EdgeInsets.all(2),
+                    child: Form(
+                      key: _formKey,
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          SizedBox(height: 18),
+                          Align(
+                            alignment: Alignment.centerLeft,
+                            child: Text(
+                              "No. Polisi",
+                              style: TextStyle(fontSize: 15),
+                            ),
+                          ),
+                          TextFormField(
+                              enabled: false,
+                              cursorColor: Colors.blue,
+                              keyboardType: TextInputType.text,
+                              decoration: InputDecoration(
+                                labelText: "",
+                                border: OutlineInputBorder(),
+
+                                contentPadding: const EdgeInsets.symmetric(
+                                    vertical: 1.0, horizontal: 5),
+                              ),
+                              controller: _nopolcontroller,
+                              validator: (nopolisi) {
+
+                                return null;
+                              }),
+                          SizedBox(height: 12),
+
+                        ],
+                      ),
+                    ),
                   ),
                 ),
-                Container(
-                    margin: EdgeInsets.symmetric(vertical: 10),
-                    child: InputDecorator(
-                        decoration: const InputDecoration(
-                            border: OutlineInputBorder(),
-                            contentPadding: const EdgeInsets.symmetric(
-                                vertical: 1.0, horizontal: 5)),
-                        child: DropdownButtonHideUnderline(
-                          child: DropdownButton<String>(
-                            value: _chosenValueSopir,
-                            //elevation: 5,
-                            style: TextStyle(color: Colors.black),
-                            items: pilihansopir
-                                .map<DropdownMenuItem<String>>((String value) {
-                              return DropdownMenuItem<String>(
-                                value: value,
-                                child: Text(value),
-                              );
-                            }).toList(),
-                            hint: Text(
-                              "Pilih Sopir",
-                              style: TextStyle(
-                                  color: Colors.black38,
-                                  fontSize: 16,
-                                  fontWeight: FontWeight.w600),
-                            ),
-                            onChanged: (String value) {
-                              setState(() {
-                                _chosenValueSopir = value;
-                              });
-                            },
-                          ),
-                        ))),
                 SizedBox(height: 30),
                 SizedBox(
                   width: double.infinity,
