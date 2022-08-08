@@ -13,7 +13,7 @@
         android:label="trackhub"
         android:icon="@mipmap/launcher_icon">
         <meta-data android:name="com.google.android.geo.API_KEY"
-               android:value="AIzaSyBEAZypPAV8eIR0RtAHH4g6JGx9wOJ5W9g"/>
+               android:value="AIzaSyDIBF939STG2WUQzUkYaG4wovSqyysKo50"/>
         <activity
             android:name=".MainActivity"
             android:launchMode="singleTop"
