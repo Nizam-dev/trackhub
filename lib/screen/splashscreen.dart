@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:trackhub/layouts/layoututama.dart';
 import 'package:trackhub/screen/home.dart';
+import 'package:trackhub/screen/onboarding.dart';
 import 'package:trackhub/screen/tracking.dart';
 
 class Splashscreen extends StatefulWidget {
@@ -34,7 +35,7 @@ class _SplashscreenState extends State<Splashscreen> {
   @override
   Widget build(BuildContext context) {
     return Center(
-      child: Image.asset("assets/images/logotrackhub.png")
+      child: Image.asset("assets/images/logo.png",width: 130,)
     );
   }
 
@@ -46,7 +47,7 @@ class _SplashscreenState extends State<Splashscreen> {
         MaterialPageRoute(builder: (context) => LayoutUtama()));
     } else{
       Navigator.of(context).pushReplacement(
-        MaterialPageRoute(builder: (context) => Home()));
+        MaterialPageRoute(builder: (context) => Onboarding()));
     }
 
     

@@ -12,6 +12,7 @@ class ButuhBantuan extends StatefulWidget {
 class _ButuhBantuanState extends State<ButuhBantuan> {
   final _formKey = GlobalKey<FormState>();
   var username = "";
+  var nik = "";
   var nama = "";
   var password = "";
   var keluhan;
@@ -116,6 +117,25 @@ class _ButuhBantuanState extends State<ButuhBantuan> {
                             ),
                           ),
                         ),
+                        Align(
+                          alignment: Alignment.centerLeft,
+                          child: Text(
+                            "NIK",
+                            style: TextStyle(fontSize: 15),
+                          ),
+                        ),
+                        TextFormField(
+                            cursorColor: Colors.blue,
+                            keyboardType: TextInputType.text,
+                            decoration: InputDecoration(
+                              hintText: "NIK",
+                               border: OutlineInputBorder(),
+                                contentPadding: const EdgeInsets.symmetric(
+                                    vertical: 1.0, horizontal: 5)
+                            ),
+                            onChanged: (nikValue) {
+                              nik = nikValue;
+                            }),
                         SizedBox(height: 12),
                         Align(
                           alignment: Alignment.centerLeft,
@@ -239,7 +259,8 @@ class _ButuhBantuanState extends State<ButuhBantuan> {
     var us = username == "" ? "" : "Username : $username \n";
     var ps = password == "" ? "" : "Password : $password \n";
     var nm = nama == "" ? "" : "Nama Lengkap : $nama \n";
-    String pesan = "Hallo Admin saya butuh bantuan \n" +"\n"+ keluhan +"\n"+ us + nm + ps;
+    var nK = nik == "" ? "" : "NIK : $nik \n";
+    String pesan = "Hallo Admin saya butuh bantuan \n" +"\n"+ keluhan +"\n"+ us + nik + nm + ps;
     String url() {
       if (Platform.isAndroid) {
         // add the [https]

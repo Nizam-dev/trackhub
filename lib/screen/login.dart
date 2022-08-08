@@ -194,10 +194,8 @@ class _LoginState extends State<Login> {
       SharedPreferences localStorage = await SharedPreferences.getInstance();
       localStorage.setString('token', json.encode(body['user']["api-token"]));
       localStorage.setString('user', json.encode(body['user']));
-      Navigator.pushReplacement(
-        context,
-        new MaterialPageRoute(builder: (context) => LayoutUtama()),
-      );
+      Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (context) =>
+    LayoutUtama()), (Route<dynamic> route) => false);
     } else {
       _showMsg(body['pesan']);
     }

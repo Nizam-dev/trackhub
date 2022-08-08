@@ -18,15 +18,21 @@ class _HomeState extends State<Home> {
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              Image.asset("assets/images/angkot.png"),
+              Image.asset("assets/images/logo.png",width: 130),
+              SizedBox(height: 15),
               Align(
-                alignment: Alignment.centerLeft,
-                child: Text("Selamat Datang Di TrackHub",
+                alignment: Alignment.center,
+                child: Text("Selamat Datang di",
                     style:
-                        TextStyle(fontWeight: FontWeight.bold, fontSize: 22)),
+                        TextStyle(fontWeight: FontWeight.bold, fontSize: 16)),
               ),
-              Text("Masuk untuk mulai bekerja dan lanjutkan perjalanan!",
-                  style: TextStyle(fontSize: 16)),
+              Align(
+                alignment: Alignment.center,
+                child: Text("Dinas Perhubungan Kabupaten Banyuwangi",
+                    style:
+                        TextStyle(fontWeight: FontWeight.bold, fontSize: 22,),textAlign: TextAlign.center),
+              ),
+             
               SizedBox(height: 50),
               SizedBox(
                 width: double.infinity,
@@ -35,7 +41,7 @@ class _HomeState extends State<Home> {
                   child: Padding(
                     padding: EdgeInsets.symmetric(horizontal: 18, vertical: 5),
                     child: Text(
-                      "Masuk",
+                      "Lanjut",
                       textDirection: TextDirection.ltr,
                       style: TextStyle(
                         color: Colors.white,
@@ -50,7 +56,7 @@ class _HomeState extends State<Home> {
                   shape: new RoundedRectangleBorder(
                       borderRadius: new BorderRadius.circular(15)),
                   onPressed: () {
-                    Navigator.pushReplacement(
+                    Navigator.push(
                       context,
                       MaterialPageRoute(builder: (context) => Login()),
                     );
