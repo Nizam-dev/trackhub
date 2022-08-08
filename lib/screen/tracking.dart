@@ -181,9 +181,8 @@ class _TrackingState extends State<Tracking> {
           left: 0,
           top: 90.0,
           child: new Container(
-            width: 150.0,
-            height: 50.0,
-            padding: EdgeInsets.symmetric(horizontal: 7),
+            width: 180.0,
+            padding: EdgeInsets.symmetric(horizontal: 7,vertical: 8),
             decoration: new BoxDecoration(
               color: Colors.white,
               boxShadow: [new BoxShadow(blurRadius: 1.0,offset: Offset(1.0, 1),)],

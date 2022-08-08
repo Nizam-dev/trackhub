@@ -4,6 +4,7 @@ import 'package:trackhub/network/api.dart';
 import 'dart:convert';
 import 'package:trackhub/screen/home.dart';
 import 'package:trackhub/screen/splashscreen.dart';
+import 'package:trackhub/screen/tentang.dart';
 import 'package:trackhub/screen/ubahData.dart';
 import 'package:trackhub/screen/ubahPassword.dart';
 import 'package:trackhub/widget/maincolor.dart';
@@ -148,6 +149,40 @@ class _AkunState extends State<Akun> {
                 ),
               ),
             ),
+
+Padding(
+              padding: EdgeInsets.symmetric(vertical: 10, horizontal: 25),
+              child: SizedBox(
+                width: double.infinity,
+                height: 40,
+                child: FlatButton(
+                  child: Padding(
+                    padding: EdgeInsets.symmetric(horizontal: 18, vertical: 5),
+                    child: Text(
+                      'Tentang Aplikasi',
+                      textDirection: TextDirection.ltr,
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 18.0,
+                        decoration: TextDecoration.none,
+                        fontWeight: FontWeight.normal,
+                      ),
+                    ),
+                  ),
+                  color: Maincolor.PrimaryColor,
+                  disabledColor: Colors.grey,
+                  shape: new RoundedRectangleBorder(
+                      borderRadius: new BorderRadius.circular(15)),
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => Tentang()),
+                    );
+                  },
+                ),
+              ),
+            ),
+
             Padding(
               padding: EdgeInsets.symmetric(vertical: 10, horizontal: 25),
               child: SizedBox(

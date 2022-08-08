@@ -7,6 +7,7 @@ import 'package:trackhub/screen/riwayat.dart';
 import 'package:trackhub/widget/maincolor.dart';
 import 'package:trackhub/network/api.dart';
 import 'dart:convert';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 
 class Pendataan extends StatefulWidget {
@@ -20,6 +21,7 @@ class _PendataanState extends State<Pendataan> {
   String _chosenValueTrayek;
   String _chosenValueSopir;
   var id = <String>[];
+  var idSupir,role;
   var pilihantrayek = <String>[];
   var sopir = <String>[];
   var no_polisi = <String>[];
@@ -34,7 +36,20 @@ class _PendataanState extends State<Pendataan> {
   List data;
   void initState() {
     super.initState();
+    _loadUserData();
     this.getData();
+  }
+
+    _loadUserData() async {
+    SharedPreferences localStorage = await SharedPreferences.getInstance();
+    var user = jsonDecode(localStorage.getString('user'));
+
+    if (user != null) {
+      setState(() {
+        idSupir= user['id'];
+        role = user['profesi'];
+      });
+    }
   }
 
   Future<String> getData() async {
@@ -71,7 +86,74 @@ class _PendataanState extends State<Pendataan> {
           padding: EdgeInsets.only(top: 25, left: 15, right: 15),
           width: MediaQuery.of(context).size.width,
           child: SingleChildScrollView(
-            child: Column(
+            child: role == "supir"? supirWidget() : petugasWidget(),
+          ),
+        ));
+  }
+
+   Widget supirWidget(){
+      return SizedBox(
+              height: 300,
+              child: Center(
+                  child: Container(
+                padding: EdgeInsets.symmetric(horizontal: 20),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisSize: MainAxisSize.min,
+                  children: <Widget>[
+                    Align(
+                      alignment: Alignment.center,
+                      child: Text("Pilih Menu Pendataan"),
+                    ),
+                    SizedBox(height: 10),
+                    SizedBox(
+                      width: double.infinity,
+                      child: RaisedButton(
+                        child: Text("Absen Penumpang"),
+                        onPressed: () {
+                          Navigator.of(context).pop();
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) =>
+                                      PendataanFilter(idSupir.toString())));
+                        },
+                        color: Maincolor.PrimaryColor,
+                        textColor: Colors.white,
+                        padding: EdgeInsets.fromLTRB(9, 9, 9, 9),
+                        splashColor: Colors.grey,
+                        shape: new RoundedRectangleBorder(
+                          borderRadius: new BorderRadius.circular(15)),
+                      ),
+                    ),
+                    SizedBox(height: 10),
+                    SizedBox(
+                      width: double.infinity,
+                      child: RaisedButton(
+                        child: Text("Scan QR Code"),
+                        onPressed: () {
+                          Navigator.of(context).pop();
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) =>
+                                      AbsenQrcode(idSupir.toString())));
+                        },
+                        color: Maincolor.PrimaryColor,
+                        textColor: Colors.white,
+                        padding: EdgeInsets.fromLTRB(9, 9, 9, 9),
+                        splashColor: Colors.grey,
+                        shape: new RoundedRectangleBorder(
+                          borderRadius: new BorderRadius.circular(15)),
+                      ),
+                    ),
+                  ],
+                ),
+              )));
+   }
+
+  Widget petugasWidget(){
+    return Column(
               children: <Widget>[
                 Align(
                   alignment: Alignment.centerLeft,
@@ -259,9 +341,7 @@ class _PendataanState extends State<Pendataan> {
                       }),
                 ),
               ],
-            ),
-          ),
-        ));
+            );
   }
 
   pilihMenuPendataan() {
