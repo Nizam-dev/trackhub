@@ -1,6 +1,8 @@
+import 'dart:convert';
 import 'dart:io';
-
+import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
+import 'package:trackhub/network/api.dart';
 import 'package:trackhub/widget/maincolor.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -16,6 +18,7 @@ class _ButuhBantuanState extends State<ButuhBantuan> {
   var nama = "";
   var password = "";
   var keluhan;
+  String no_wa="";
   final _scaffoldKey = GlobalKey<ScaffoldState>();
   bool _secureText = true;
   var pilihankeluhan = <String>[
@@ -28,7 +31,17 @@ class _ButuhBantuanState extends State<ButuhBantuan> {
   void initState() {
     keluhan = pilihankeluhan[_pilihan];
     super.initState();
+    _getNomor();
   }
+
+  void _getNomor() async{
+    String url = Network().getUrl();
+    var res = await http.get(Uri.parse(url+'/no_admin'));
+    var body = json.decode(res.body);
+    no_wa = body["no_admin"];
+
+  }
+
 
   showHide() {
     setState(() {
@@ -133,8 +146,12 @@ class _ButuhBantuanState extends State<ButuhBantuan> {
                                 contentPadding: const EdgeInsets.symmetric(
                                     vertical: 1.0, horizontal: 5)
                             ),
-                            onChanged: (nikValue) {
+                            validator: (nikValue) {
+                              if (nikValue.isEmpty) {
+                                return 'Please enter your NIK';
+                              }
                               nik = nikValue;
+                              return null;
                             }),
                         SizedBox(height: 12),
                         Align(
@@ -255,12 +272,12 @@ class _ButuhBantuanState extends State<ButuhBantuan> {
   }
 
   void butuhBantuan() async {
-    String phone = "6282257661154";
+    String phone = no_wa;
     var us = username == "" ? "" : "Username : $username \n";
     var ps = password == "" ? "" : "Password : $password \n";
     var nm = nama == "" ? "" : "Nama Lengkap : $nama \n";
     var nK = nik == "" ? "" : "NIK : $nik \n";
-    String pesan = "Hallo Admin saya butuh bantuan \n" +"\n"+ keluhan +"\n"+ us + nik + nm + ps;
+    String pesan = "Hallo Admin saya butuh bantuan \n" +"\n"+ keluhan +"\n"+ us + nK + nm + ps;
     String url() {
       if (Platform.isAndroid) {
         // add the [https]

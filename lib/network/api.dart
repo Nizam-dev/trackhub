@@ -11,6 +11,10 @@ class Network{
     token = jsonDecode(localStorage.getString('token'));
   }
 
+  getUrl(){
+    return _url;
+  }
+
   auth(data, apiURL) async{
     var fullUrl = _url + apiURL;
     return await http.post(

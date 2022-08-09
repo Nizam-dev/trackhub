@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:trackhub/screen/home.dart';
+import 'package:trackhub/screen/login.dart';
 import 'package:trackhub/widget/maincolor.dart';
 class Onboarding extends StatelessWidget {
 
@@ -125,9 +126,9 @@ Tata Cara Melakukan Pendataan Penumpang oleh Petugas Terminal
                   shape: new RoundedRectangleBorder(
                       borderRadius: new BorderRadius.circular(15)),
                   onPressed: () {
-                    Navigator.pushReplacement(
+                    Navigator.push(
                       context,
-                      MaterialPageRoute(builder: (context) => Home()),
+                      MaterialPageRoute(builder: (context) => Login()),
                     );
                   },
                 ),

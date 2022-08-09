@@ -47,7 +47,7 @@ class _SplashscreenState extends State<Splashscreen> {
         MaterialPageRoute(builder: (context) => LayoutUtama()));
     } else{
       Navigator.of(context).pushReplacement(
-        MaterialPageRoute(builder: (context) => Onboarding()));
+        MaterialPageRoute(builder: (context) => Home()));
     }
 
     

@@ -111,7 +111,6 @@ class _PendataanState extends State<Pendataan> {
                       child: RaisedButton(
                         child: Text("Absen Penumpang"),
                         onPressed: () {
-                          Navigator.of(context).pop();
                           Navigator.push(
                               context,
                               MaterialPageRoute(
@@ -132,7 +131,6 @@ class _PendataanState extends State<Pendataan> {
                       child: RaisedButton(
                         child: Text("Scan QR Code"),
                         onPressed: () {
-                          Navigator.of(context).pop();
                           Navigator.push(
                               context,
                               MaterialPageRoute(

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:trackhub/screen/onboarding.dart';
 import 'package:trackhub/widget/maincolor.dart';
 import 'package:trackhub/screen/login.dart';
 
@@ -58,7 +59,7 @@ class _HomeState extends State<Home> {
                   onPressed: () {
                     Navigator.push(
                       context,
-                      MaterialPageRoute(builder: (context) => Login()),
+                      MaterialPageRoute(builder: (context) => Onboarding()),
                     );
                   },
                 ),
