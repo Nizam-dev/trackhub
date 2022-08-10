@@ -124,10 +124,8 @@ class _AbsenQrcodeState extends State<AbsenQrcode> {
     super.dispose();
   }
   void _onQRViewCreated(QRViewController controller) {
-    setState(() {
       this.controller=controller;
-    });
-    
+
     controller.scannedDataStream.listen((Barcode scanData) async {
       controller.pauseCamera();
       String codeQr = scanData.code;
@@ -138,6 +136,7 @@ class _AbsenQrcodeState extends State<AbsenQrcode> {
       };
     var res = await Network().auth(data, '/scan-penumpang');
     var body = json.decode(res.body);
+    print(body);
       setState((){
         if(body['pesan'] == "sukses"){
           qrText =   "Data $codeQr Ditemukan";

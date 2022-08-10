@@ -46,8 +46,10 @@ class _PendataanState extends State<Pendataan> {
 
     if (user != null) {
       setState(() {
-        idSupir= user['id'];
         role = user['profesi'];
+        if(role == "supir"){
+          idSupir= user['angkutan_id'];
+        }
       });
     }
   }
