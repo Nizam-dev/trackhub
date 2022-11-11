@@ -1,5 +1,7 @@
 # trackhub
 
+<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/Nizam-dev/trackhub/main/assets/Icons/icontrackhub.png" width="400"></a></p>
+
 Aplikasi Tracking dan Pendataan Angkutan dan Penumpang
 
 ## Getting Started
